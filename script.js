@@ -1,14 +1,14 @@
-// 1) On récupère l'affichage et tous les boutons
+
 const display = document.querySelector(".display");
 const buttons = document.querySelectorAll(".calc-button");
 
-// 2) Etat interne de la calculatrice
-let current = "0";        // Ce qui est affiché
-let justEvaluated = false; // Pour savoir si on vient d'appuyer sur "="
+
+let current = "0";       
+let justEvaluated = false; 
 
 const opMap = { "×": "*", "÷": "/", "−": "-" };
 
-// 3) Helpers
+
 const isOperator = (ch) => ["+", "-", "*", "/"].includes(ch);
 
 function updateDisplay() {
@@ -16,7 +16,7 @@ function updateDisplay() {
 }
 
 function sanitize(expr) {
-  // remplace les symboles jolis par les vrais opérateurs JS
+ 
   return expr.replace(/[×÷−]/g, (m) => opMap[m]);
 }
 
@@ -30,7 +30,7 @@ function handleNumber(digit) {
 }
 
 function handleDot() {
-  // On empêche plusieurs '.' dans le même nombre
+  
   const lastNumber = current.split(/[\+\-\*\/]/).pop();
   if (!lastNumber.includes(".")) {
     current += ".";
@@ -42,7 +42,7 @@ function handleOperator(op) {
   const last = current.slice(-1);
 
   if (isOperator(last)) {
-    // si le dernier char est déjà un opérateur, on le remplace
+    
     current = current.slice(0, -1) + normalized;
   } else {
     current += normalized;
@@ -72,7 +72,7 @@ function handleBackspace() {
 function handleEqual() {
   try {
     const expr = sanitize(current);
-    // ATTENTION : eval est pratique ici, mais à éviter sur des inputs non maîtrisés
+  
     const result = eval(expr);
     current = String(result);
     justEvaluated = true;
@@ -124,8 +124,9 @@ document.addEventListener("keydown", (e) => {
   } else if (key.toLowerCase() === "c") {
     handleClear();
   } else {
-    return; // on ignore le reste
+    return; 
   }
 
   updateDisplay();
 });
+
